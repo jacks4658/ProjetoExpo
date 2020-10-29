@@ -19,11 +19,11 @@ function Feed({ navigation }) {
 
    
     
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end',backgroundColor:'#262D35' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end',backgroundColor:'#000029' }}>
       
       <StatusBar  
                     backgroundColor = "#FF6146"  
-                    barStyle = "dark-content"   
+                    barStyle = "light-content"   
                     hidden = {false}    
                     translucent = {true}  
                 />  
