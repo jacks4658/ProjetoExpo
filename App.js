@@ -23,7 +23,7 @@ function Feed({ navigation }) {
       
       <StatusBar  
                     backgroundColor = "#FF6146"  
-                    barStyle = "light-content"   
+                    barStyle = "dark-content"   
                     hidden = {false}    
                     translucent = {true}  
                 />  
