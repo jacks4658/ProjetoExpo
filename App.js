@@ -10,6 +10,7 @@ import {
 import {FontAwesome5}from   '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { color } from 'react-native-reanimated';
+import HomeScreen, {} from './screens/Notificacao'
 
 
 
@@ -75,7 +76,7 @@ function MyDrawer() {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen  name="Feed" component={Feed} />
-      <Drawer.Screen name="Notifications" component={Notifications} />
+      <Drawer.Screen name="Notifications" component={HomeScreen} />
     </Drawer.Navigator>
   );
 }

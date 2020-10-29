@@ -1,13 +1,49 @@
 import React from 'react';
-import { View,Text} from 'react-native';
+import { View, Text, Button, StyleSheet, StatusBar ,ImageBackground, OpaqueColorValue} from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
-// import { Container } from './styles';
+const HomeScreen = ({navigation}) => {
 
-function Notifications() {
+  const { colors } = useTheme();
+
+  const theme = useTheme();
+  const image = { uri: "https://firebasestorage.googleapis.com/v0/b/aplicativo-35650.appspot.com/o/jk%20System.png?alt=media&token=bfdfd638-6a6f-4949-bb90-02b53ddc6bbe" };
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Notifications Screen</Text>
+      <View style={styles.container}>
+        <StatusBar barStyle= { theme.dark ? "dark-content" : "light-content" }/>
+        <Text style={{color: colors.text}}>Home Screen</Text>
+     
+        <ImageBackground source={image} style={styles.image}>
+      <Text style={styles.text}>JK System</Text>
+    </ImageBackground>
+     
+     <Button
+        title="Go to details screen"
+        onPress={() => navigation.navigate("Feed")}
+      />
       </View>
     );
-  }
-  export default Notifications
+};
+
+export default HomeScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    flexDirection: "column",
+    backgroundColor:'#000029',
+    
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    height: 250,
+    width: 250,
+    marginLeft:20,
+    marginTop:90
+     
+  },
+});
