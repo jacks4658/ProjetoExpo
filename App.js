@@ -1,91 +1,153 @@
-import * as React from 'react';
-import { View, Text, Button,TouchableOpacity,StatusBar,ImageBackground,Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
-import {FontAwesome5}from   '@expo/vector-icons'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { color } from 'react-native-reanimated';
-import HomeScreen, {} from './screens/Notificacao'
 
-
-
-
-function Feed({ navigation }) {
-  return (
-
-   
-    
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end',backgroundColor:'#000029' }}>
-      
-      <StatusBar  
-                    backgroundColor = "#FF6146"  
-                    barStyle = "light-content"   
-                    hidden = {false}    
-                    translucent = {true}  
-                />  
-
-
-       <SafeAreaView style={{flex:1}}>
-       <TouchableOpacity style={{alignItems:'flex-end',margin:24}}  >
-
-      <FontAwesome5 name="bars" size={30} color='#F39A4A' onPress={() => navigation.openDrawer()} />
-    
-      </TouchableOpacity>
-    
-      </SafeAreaView>
-    </View>
-   
-  );
-
-  
-}
-
-function Notifications() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notifications Screen</Text>
-    </View>
-  );
-}
-
-function CustomDrawerContent(props) {
-  return (
-    
-    <DrawerContentScrollView style={{backgroundColor:'white'}} {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem 
-        label="Close drawer"
-        onPress={() => props.navigation.closeDrawer()}
-      />
-      <DrawerItem
-        label="Toggle drawer" style={{fonteSize:50}}
-        onPress={() => props.navigation.toggleDrawer()}
-      />
-    </DrawerContentScrollView>
-  );
-}
-
-const Drawer = createDrawerNavigator();
-
-function MyDrawer() {
-  return (
-    <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen  name="Feed" component={Feed} />
-      <Drawer.Screen name="Notifications" component={HomeScreen} />
-    </Drawer.Navigator>
-  );
-}
-
+import React, { useState ,useEffect } from 'react';
+import { KeyboardAvoidingView, Text, 
+  TextInput, Platform, Keyboard, 
+Animated, StyleSheet, TouchableOpacity,
+ View,StatusBar} from 'react-native';
+import Estilos from './styles/Estilos'
 export default function App() {
-  return (
-    <NavigationContainer>
-      <MyDrawer />
-    </NavigationContainer>
-  );
+
+ 
+
+const [offset, setOffset] =  useState(new Animated.ValueXY({x: 0, y: 80}));
+const [opacity, setOpacity] =  useState(new Animated.Value(0));
+const [logo, setLogo] =  useState(new Animated.ValueXY({x: 220, y: 220}));
+
+
+
+
+useEffect(() => {
+keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide);  
+Animated.parallel([
+Animated.spring(offset.y, {
+ 
+  toValue: 0,
+  speed: 5,
+  bounciness: 15,
+  useNativeDriver : true ,
+}),
+Animated.timing(opacity, {
+  toValue: 1,
+  duration: 300,
+  useNativeDriver : true ,
+
+})
+]).start();
+
+}, []);
+
+
+//Teclado Aberto
+function keyboardDidShow () {
+Animated.parallel([
+  Animated.timing(logo.y, {
+    toValue: (Platform.OS === 'android' ? 70 : 90),
+    duration: 100,
+   useNativeDriver : false,
+  }),
+  Animated.timing(logo.x, {
+    toValue: (Platform.OS === 'android' ? 70 : 90),
+    duration: 100,
+    useNativeDriver : false, 
+    
+    
+  }),
+  
+]).start();
 }
+
+//Teclado Fechou
+function keyboardDidHide () {
+Animated.parallel([
+  Animated.timing(logo.y, {
+    toValue: 220,
+    duration: 150,
+    useNativeDriver : false ,
+  }),
+  Animated.timing(logo.x, {
+    toValue: 220,
+    duration: 150,
+    useNativeDriver : false,
+    
+  }),
+]).start();
+}
+
+return (
+<KeyboardAvoidingView  style={Estilos.background} behavior={Platform.OS === 'ios' ? 'padding' : ''} enabled>
+ 
+ <View style={{flex:1, justifyContent: 'center'}}>
+  <Animated.Image 
+  style={[
+    Estilos.logo,
+    {
+      width: logo.x,
+      height: logo.y  
+    }
+    
+    
+    ]} 
+    source={{
+      uri:
+        'https://firebasestorage.googleapis.com/v0/b/aplicativo-35650.appspot.com/o/jk%20System_DobleColor.png?alt=media&token=99702801-aceb-4737-98ea-cc6b04e9e0e1',
+    
+    
+      }}
+ 
+ />
+
+ <Text style={Estilos.texto}>Jk System</Text> 
+   
+ < StatusBar  
+backgroundColor="#FF6146"  
+barStyle="light-content"   
+oculto={ true }    
+translúcido={ false }  
+/> 
+ </View>
+
+  <Animated.View 
+  style={[
+     Estilos.container,
+    {
+      opacity: opacity,
+      transform: [
+        { translateY: offset.y}
+      ],
+    },
+    ]}
+  >
+    <TextInput
+      style={Estilos.input}
+      placeholder="Email"
+      autoCorrect={false}
+      autoCapitalize="none"
+      onChangeText={()=> {}}
+    />
+
+    <TextInput
+      style={Estilos.input}       
+      placeholder="Senha"
+      autoCorrect={false}
+      autoCapitalize="none"
+      onChangeText={()=> {}}
+    />
+
+    <TouchableOpacity style={Estilos.btnSubmit}>
+      <Text style={Estilos.submitText}>Acessar</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={Estilos.btnRegister}>
+      <Text style={Estilos.registerText}>Criar conta gratuita</Text>
+    </TouchableOpacity>
+
+  </Animated.View>
+ 
+</KeyboardAvoidingView>
+);
+}
+
+
+
 
