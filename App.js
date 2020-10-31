@@ -1,10 +1,12 @@
 
-import React, { useState ,useEffect } from 'react';
+import React, { useState ,useEffect ,Component} from 'react';
 import { KeyboardAvoidingView, Text, 
   TextInput, Platform, Keyboard, 
 Animated, StyleSheet, TouchableOpacity,
  View,StatusBar} from 'react-native';
 import Estilos from './styles/Estilos'
+import Login, {} from './screens/Login'
+
 export default function App() {
 
  
@@ -117,31 +119,11 @@ translúcido={ false }
       ],
     },
     ]}
+  
+  //AQUI VAI O COMPONENTE DE LOGIN
   >
-    <TextInput
-      style={Estilos.input}
-      placeholder="Email"
-      autoCorrect={false}
-      autoCapitalize="none"
-      onChangeText={()=> {}}
-    />
-
-    <TextInput
-      style={Estilos.input}       
-      placeholder="Senha"
-      autoCorrect={false}
-      autoCapitalize="none"
-      onChangeText={()=> {}}
-    />
-
-    <TouchableOpacity style={Estilos.btnSubmit}>
-      <Text style={Estilos.submitText}>Acessar</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity style={Estilos.btnRegister}>
-      <Text style={Estilos.registerText}>Criar conta gratuita</Text>
-    </TouchableOpacity>
-
+ <Login/>
+    
   </Animated.View>
  
 </KeyboardAvoidingView>
